@@ -1,0 +1,15 @@
+/*
+Description: How many transactions are above the average transaction amount during the same time period?
+*/
+
+SELECT
+	count(*) as NumberOfTransactionsAboveAvg
+FROM
+	Invoice
+WHERE
+	total > (SELECT
+	round(avg(total),2) as GlobalAvg
+FROM
+	Invoice
+WHERE
+	(strftime('%Y%', InvoiceDate) = '2011') OR (strftime('%Y', InvoiceDate) = '2012'))
