@@ -1,0 +1,22 @@
+/*
+Description: Get a list of customers, sales reps, and total transaction amounts for each customer between 2011 and 2012.
+*/
+
+SELECT
+	c.FirstName ||' '|| c.LastName as CustomerFullName,
+	e.FirstName ||' '|| e.LastName as  SupportRep,
+	sum(i.total) as TotalAmountSpent
+FROM
+	Invoice as i
+INNER JOIN
+	Customer as c
+ON
+	i.CustomerId = c.CustomerId
+INNER JOIN
+	Employee as e
+ON
+	c.SupportRepId = e.EmployeeId
+WHERE
+	(strftime('%Y', i.InvoiceDate) = '2011') OR (strftime('%Y', i.InvoiceDate) = '2012')
+Group By
+	CustomerFullName
