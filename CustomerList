@@ -1,0 +1,20 @@
+/*
+Description: Get a list of customers who made purchases between 2011 and 2012.
+*/
+
+SELECT
+	c.FirstName ||' '|| c.LastName as CustomerFullName,
+	sum(i.total) as TotalAmountSpent,
+	strftime('%Y', i.InvoiceDate) as InvoiceYear
+FROM
+	Invoice as i
+INNER JOIN
+	Customer as c
+ON
+	i.CustomerId = c.CustomerId
+WHERE
+	(strftime('%Y', i.InvoiceDate) = '2011') OR (strftime('%Y', i.InvoiceDate) = '2012')
+Group By
+	CustomerFullName, InvoiceYear
+ORDER BY
+	InvoiceYear, CustomerFullName
