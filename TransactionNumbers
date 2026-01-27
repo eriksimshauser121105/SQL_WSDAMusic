@@ -1,0 +1,17 @@
+/*
+
+Description: Find the number of transactions that took place between the years 2011 and 2012.
+						In addition, find the amount of money WSDA Music made in those two years
+*/
+
+SELECT
+	count(*) as NumberOfSales,
+	strftime('%Y', InvoiceDate) as Year,
+	sum(total) as [Total]
+FROM
+	Invoice
+WHERE
+	(strftime('%Y', InvoiceDate) = '2011') OR (strftime('%Y', InvoiceDate) = '2012')
+GROUP BY
+	Year;
+	
