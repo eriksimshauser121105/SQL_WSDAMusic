@@ -1,0 +1,18 @@
+/*
+Desc: 1. What is the average transaction amount for each year that WSDA Music has been in business?
+      2. How many transactions, grouped by year, are above that year's  average?
+*/
+
+SELECT
+	strftime('%Y', InvoiceDate) as Year,
+	count(*) as TransactionsAboveAvg
+FROM
+	Invoice
+WHERE
+	total > (
+		SELECT round(avg(total),2)
+		FROM Invoice 
+		WHERE strftime('%Y', InvoiceDate) = strftime('%Y', InvoiceDate))
+GROUP BY
+	Year
+
